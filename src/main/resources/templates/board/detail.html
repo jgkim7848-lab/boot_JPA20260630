@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+<div layout:fragment="content" class="container-md">
+    <!--  여기가 main  -->
+    <!--/board/register.html-->
+    [[${board}]]
+    <h1>
+        Board Register Page - No.
+        <span th:text="${board.bno}"></span>
+    </h1>
+    <form action="/board/update" method="post" class="my-5" id="modForm">
+        <input type="hidden" name="bno" th:value="${board.bno}">
+        <!--name이 있어야 value를 받을수있고. value를 받아야 boardController에서 board.bno를 받아다 쓸수있게된다.
+            밑의 regdate나 moddate같은 경우엔 이런식으로 받아다 쓸 부분이 없으므로 name을 삭제해도 무관해진다.
+        -->
+        <div class="mb-3">
+            <label for="t" class="form-label">Title</label>
+            <input type="text" class="form-control" name="title" id="t"
+                   placeholder="title..." th:value="${board.title}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="w" class="form-label">Writer</label>
+            <input type="text" class="form-control" id="w" name="writer"
+                   placeholder="writer" th:value="${board.writer}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="c" class="form-label">Content</label>
+            <textarea class="form-control" id="c" rows="10" name="content" cols="30" readonly>
+            [[${board.content}]]
+            </textarea>
+        </div>
+
+<!--        <div class="mb-3">-->
+<!--            <label for="rc" class="form-label">Read Count</label>-->
+<!--            <input type="number" class="form-control" id="rc" name="readCount"-->
+<!--                   th:value="${board.readCount}" readonly>-->
+<!--        </div>-->
+
+<!--        <div class="mb-3">-->
+<!--            <label for="cq" class="form-label">Comment Qty</label>-->
+<!--            <input type="number" class="form-control" id="cq" name="cmtQty"-->
+<!--                   th:value="${board.cmtQty}" readonly>-->
+<!--        </div>-->
+
+<!--        <div class="mb-3">-->
+<!--            <label for="fq" class="form-label">File Qty</label>-->
+<!--            <input type="number" class="form-control" id="fq" name="fileQty"-->
+<!--                   th:value="${board.fileQty}" readonly>-->
+<!--        </div>-->
+
+        <div class="mb-3">
+            <label for="rd" class="form-label">Registered Date</label>
+            <input type="text" class="form-control" id="rd" name="regDate"
+                   th:value="${board.regDate}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="md" class="form-label">Modified Date</label>
+            <input type="text" class="form-control" id="md" name="modDate"
+                   th:value="${board.modDate}" readonly>
+        </div>
+    </form>
+
+    <a th:href="@{#}">
+        <button id="modBtn" type="button" class="btn btn-primary">수정</button>
+    </a>
+    <a th:href="@{/board/delete(bno=${board.bno})}">
+        <button id="delBtn" type="button" class="btn btn-primary">삭제</button>
+    </a>
+    <a th:href="@{/board/list}">
+        <button id="listBtn" type="button" class="btn btn-primary">list리스트로</button>
+    </a>
+
+    <!--댓글라인.   댓글 입력이 있을거고 댓글 출력이 있을테고.-->
+    <div id="comment">
+        <!--댓글 입력-->
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="cmtWriter">writer</span>
+            <input type="text" class="form-control" id="cmtText" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+            <button type="button" id="cmtAddBtn" class="btn btn-primary">post</button>
+        </div>
+
+        <!--댓글 출력.-->
+        <ul class="list-group">
+            <li class="list-group-item active" id="cmtListArea" aria-current="true">An active item</li>
+            <li class="list-group-item">
+                <div th:class="ms-2 me-auto">
+                    <div>Writer</div>
+                    content
+                </div>
+                <span th:class="badge rounded-pill text-bg-primary">regDate</span>
+                <button type="button" class="btn btn-outline-warning"></button>
+                <button type="button" class="btn btn-outline-danger"></button>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+
+
+    <script th:src="@{/js/boardModify.js}"></script>
+    <script th:src="@{/js/boardComment.js}"></script>
+
+
+</div>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<div layout:fragment="content" class="container-md">
+    <h1 style="color: hotpink; background-color: lime;">Spring Boot JPA Project....</h1>
+
+    <table class="table" style="background-color: yellow; color: blue; border: 3px solid red;">
+        <thead style="background-color: orange; color: purple;">
+        <tr>
+            <th>BNO</th>
+            <th>Title</th>
+            <th>Writer</th>
+            <th>Content</th>
+            <th>ReadCount</th>
+            <th>RegDate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${ph.list}" style="background-color: cyan; color: darkred;">
+            <td th:text="${board.bno}"></td>
+            <td>
+                <a th:href="@{/board/detail(bno=${board.bno})}" th:text="${board.title}"></a>
+            </td>
+            <td th:text="${board.writer}"></td>
+            <td th:text="${board.content}"></td>
+            <td th:text="${board.readCount}"></td>
+            <td th:text="${board.regDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${ph.prev eq false ? 'disabled' : ''}">
+                <a class="page-link" th:href="@{/board/list(pageNo=${ph.startPage}-1)}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <th:block th:each="i:${#numbers.sequence(ph.startPage,ph.endPage)} ">
+                <li class="page-item" th:classappend="${ph.prev eq i ? 'active' : ''}">
+                    <a class="page-link" th:href="@{/board/list(pageNo=${i})}">[[${i}]]</a>
+                </li>
+            </th:block>
+
+            <li class="page-item" th:classappend="${ph.next eq false ? 'disabled' : ''}">
+                <a class="page-link" th:href="@{/board/list(pageNo=${ph.endPage}+1)}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
