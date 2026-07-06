@@ -1,5 +1,5 @@
 package com.example.boot.service;
-
+//BoardServiceImpl
 import com.example.boot.dto.BoardDTO;
 import com.example.boot.entity.Board;
 import com.example.boot.repository.BoardRepository;

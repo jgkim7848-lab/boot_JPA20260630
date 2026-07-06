@@ -1,5 +1,5 @@
 package com.example.boot.handler;
-
+//PagingHandler
 import com.example.boot.dto.BoardDTO;
 import com.example.boot.entity.Board;
 import jakarta.persistence.Entity;

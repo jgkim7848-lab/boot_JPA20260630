@@ -1,5 +1,5 @@
 package com.example.boot.entity;
-
+//Board
 import jakarta.persistence.*;
 import lombok.*;
 

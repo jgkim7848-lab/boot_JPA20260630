@@ -4,6 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}"
 >
+<!--/board/detail.html-->
 <div layout:fragment="content" class="container-md">
     <!--  여기가 main  -->
     <!--/board/register.html-->
@@ -31,9 +32,7 @@
 
         <div class="mb-3">
             <label for="c" class="form-label">Content</label>
-            <textarea class="form-control" id="c" rows="10" name="content" cols="30" readonly>
-            [[${board.content}]]
-            </textarea>
+            <textarea class="form-control" id="c" rows="10" name="content" cols="30" readonly>[[${board.content}]]</textarea>
         </div>
 
 <!--        <div class="mb-3">-->
@@ -66,6 +65,9 @@
                    th:value="${board.modDate}" readonly>
         </div>
     </form>
+    <div>
+        cmtQty값 = [[${board.cmtQty}]]
+    </div>
 
     <a th:href="@{#}">
         <button id="modBtn" type="button" class="btn btn-primary">수정</button>
@@ -87,14 +89,13 @@
         </div>
 
         <!--댓글 출력.-->
-        <ul class="list-group">
-            <li class="list-group-item active" id="cmtListArea" aria-current="true">An active item</li>
+        <ul class="list-group" id="cmtListArea">
             <li class="list-group-item">
-                <div th:class="ms-2 me-auto">
+                <div class="ms-2 me-auto">
                     <div>Writer</div>
                     content
                 </div>
-                <span th:class="badge rounded-pill text-bg-primary">regDate</span>
+                <span class="badge rounded-pill text-bg-primary">regDate</span>
                 <button type="button" class="btn btn-outline-warning"></button>
                 <button type="button" class="btn btn-outline-danger"></button>
 
@@ -102,12 +103,48 @@
 
         </ul>
 
+        <!--morebtn-->
+        <div class="input-group my-5">
+            <button type="button" class="btn btn-outline-warning"
+                    id="moreBtn"
+                    data-page="1"
+                style="visibility: hidden"
+            >
+                more +
+            </button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="cmtWriterMod">${Writer}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" id="cmtTextMod" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="cmtModBt">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
 
-
+    <script th:inline="javascript">
+        const bno = [[${board.bno}]]
+    </script>
 
     <script th:src="@{/js/boardModify.js}"></script>
     <script th:src="@{/js/boardComment.js}"></script>
-
+    <script>
+        spreadCommentList(bno);
+    </script>
 
 </div>

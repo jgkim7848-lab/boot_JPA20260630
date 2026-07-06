@@ -1,5 +1,5 @@
 package com.example.boot.service;
-
+//BoardService
 import com.example.boot.dto.BoardDTO;
 import com.example.boot.entity.Board;
 import org.springframework.data.domain.Page;

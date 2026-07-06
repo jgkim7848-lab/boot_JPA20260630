@@ -1,3 +1,4 @@
+//boardModify.js
 console.log("boardModify.js");
 
 //수정버튼을  클릭하면 title, contents만 readonly를 풀거임.

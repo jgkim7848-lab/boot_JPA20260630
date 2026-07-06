@@ -1,5 +1,5 @@
 package com.example.boot.dto;
-
+//BoardDTO
 import lombok.*;
 
 import java.time.LocalDate;

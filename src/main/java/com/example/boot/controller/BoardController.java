@@ -1,6 +1,6 @@
 package com.example.boot.controller;
 
-
+//BoardController
 import com.example.boot.dto.BoardDTO;
 import com.example.boot.handler.PagingHandler;
 import com.example.boot.service.BoardService;

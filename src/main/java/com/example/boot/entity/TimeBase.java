@@ -1,5 +1,5 @@
 package com.example.boot.entity;
-
+//TimeBase
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
