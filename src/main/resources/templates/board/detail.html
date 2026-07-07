@@ -8,7 +8,7 @@
 <div layout:fragment="content" class="container-md">
     <!--  여기가 main  -->
     <!--/board/register.html-->
-    [[${board}]]
+    <!--[[${board}]]-->
     <h1>
         Board Register Page - No.
         <span th:text="${board.bno}"></span>
@@ -96,6 +96,7 @@
                     content
                 </div>
                 <span class="badge rounded-pill text-bg-primary">regDate</span>
+
                 <button type="button" class="btn btn-outline-warning"></button>
                 <button type="button" class="btn btn-outline-danger"></button>
 
@@ -127,7 +128,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="cmtModBt">Update</button>
+                        <button type="button" class="btn btn-primary" id="cmtModBtn">Update</button>
                     </div>
                 </div>
             </div>
@@ -148,3 +149,14 @@
     </script>
 
 </div>
+
+<!--
+filehandler를 controller에서 분리????
+
+uuid
+saveDir
+fileName
+fileType
+bno
+filesize
+-->

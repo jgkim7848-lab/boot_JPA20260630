@@ -52,7 +52,8 @@ function spreadCommentList(bno, page=1){
                 li+=` <div class="fw-bold">${comment.writer}</div>`;
                 li+=`${comment.content}`;
                 li+=`</div>`;
-                li+=`<span class="badge rounded-pill text-bg-primary">${comment.regDate}</span>`;
+                li+=`<span class="badge rounded-pill text-bg-primary">등록일: ${comment.regDate}</span>`;
+                li+=`<span class="badge rounded-pill text-bg-primary">수정일: ${comment.modDate}</span>`;
                 li+=`<div class="d-flex justify-content-end gap-2">`;
                 li+=` <button type="button" class="btn btn-outline-warning btn-sm mod" data-bs-target="#commentModal" data-bs-toggle="modal">%</button>`;
                 li+=`<button type="button" class="btn btn-outline-danger btn-sm del">X</button>`;
@@ -82,6 +83,53 @@ function spreadCommentList(bno, page=1){
 }
 
 document.addEventListener('click', (e)=>{
+    if(e.target.classList.contains("mod")){
+        //mod버튼 클릭시 수정할 데이터를 modal에 띄우기.
+        //modal 화면에 보낼 데이터 cno writer content
+
+        //closest  내가 속해있는 내 부모의 객체 가져오기.
+        let li = e.target.closest('li');
+        let cno = li.dataset.cno;
+
+        let cmtWriter = li.querySelector('.fw-bold').innerText;
+
+        // 얘는 node로 빠진다??
+        let cmtText = li.querySelector('.fw-bold').nextSibling; //같은 부모밑에 있는 다른 형제(같은 div로 묶여있을것) 찾기
+        console.log(cno);
+        console.log(cmtWriter);
+        console.log(cmtText, typeof cmtText);    //댓글에서 %버튼 눌렀을때 f12 눌러서 잘 되나 확인.
+
+        document.getElementById('cmtWriterMod').innerHTML=
+            `no.${cno} <b>${cmtWriter}</b>`;
+        document.getElementById('cmtTextMod').value = cmtText.nodeValue;
+
+        //cmtModBtn => data-cno
+        document.getElementById('cmtModBtn').setAttribute("data-cno", cno);
+        //동기 비동기 데이터 전송???
+
+    }
+    if(e.target.id == "cmtModBtn"){
+        //실제 modal의 수정버튼
+        //비동기전송하면 된도
+        let modData={
+            cno: e.target.dataset.cno,
+            content: document.getElementById('cmtTextMod').value
+        }
+        console.log(modData);
+
+        commentUpdateToServer(modData).then(result =>{
+            if(result =='1'){
+                alert("수정성공!")
+
+            }
+            spreadCommentList(bno);
+            document.querySelector(".btn-close").click();
+
+        })
+    }
+
+
+
     if(e.target.id == "moreBtn"){
         //더보기 버튼을 클릭했을때.
         spreadCommentList(bno, parseInt(e.target.dataset.page));
@@ -152,7 +200,27 @@ async  function commentRemoveToServer(cno){
     }
 }
 
+async function commentUpdateToServer(modData){
+    try{
+        const url = '/comment/modify';
+        const config={
+            method:'put',
+            headers:{
+                'content-type':'application/json; charset=utf-8'
+            },
+            body:JSON.stringify(modData)
+        };
 
+        const response=await fetch(url,config);
+
+        const result=await response.text();
+
+        return result;
+
+    }catch(e){
+        console.log(e);
+    }
+}
 
 
 

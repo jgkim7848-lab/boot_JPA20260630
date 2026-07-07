@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.Media;
 import java.util.List;
 
 @Slf4j
@@ -56,6 +57,15 @@ public class CommentController {
     public ResponseEntity<String> remove(@PathVariable("cno") long cno){
 
         commentService.remove(cno);
+
+
+        return cno > 0 ? new ResponseEntity<String>("1", HttpStatus.OK):
+                new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PutMapping(value="/modify", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<String> modify(@RequestBody CommentDTO commentDTO){
+        long cno = commentService.modify(commentDTO);
 
 
         return cno > 0 ? new ResponseEntity<String>("1", HttpStatus.OK):

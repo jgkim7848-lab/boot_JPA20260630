@@ -26,7 +26,6 @@ public class CommentServiceImpl implements CommentService {
     private final BoardRepository boardRepository;
 
     @Transactional //항상 framework가 있는걸 찾아서 달아줄것.   이것이 달렸다는건 2개 이상의 명령어가 실행될때....둘중 하나라도 잘못됐을때 에러가 떠야함.
-    //
     @Override
     public long post(CommentDTO commentDTO) {
         //저장 대상은 항상 entity   이 말은 곧 commentDTO를 comment로 변환을 해야 저장이 가능하다는 소리....
@@ -47,6 +46,7 @@ public class CommentServiceImpl implements CommentService {
 
     }
 
+    @Transactional
     @Override
     public List<CommentDTO> getList(long bno) {
         //select * from comment where bno = #{bno} order by cno desc
@@ -57,6 +57,8 @@ public class CommentServiceImpl implements CommentService {
 
         return commentDTOList;
     }
+
+    @Transactional
 //위는 page없는애 아래는 page있는애.
     @Override
     public Page<CommentDTO> getList(long bno, int page) {
@@ -69,6 +71,30 @@ public class CommentServiceImpl implements CommentService {
         return list.map(this::convertEntityToDto);
     }
 
+    @Transactional
+    @Override
+    public long modify(CommentDTO commentDTO) {
+         Comment comment = commentRepository.findById(commentDTO.getCno())
+                   .orElseThrow(()->new EntityNotFoundException("해당 댓글을 찾을수 없습니다."));
+         comment.setContent(commentDTO.getContent());
+         return comment.getCno();
+        /*
+         * save() id가 없으면 insert고 있으면 update를 한다.
+         * EntityNotFoundException 은 where에서 검색한 조건의 값이 없을 경우 발생하게된다....정보 유실의 가능성이 커지게됨.
+         * dirty checking 변동 감지
+         * findById(cno)  먼저 조회해서 영속성 상태를 만듬.
+         * 있는게 확인되면 수정하는것.  그리고 save()를 진행.
+         *
+         * @Transactional  이 dirty checking만으로 업데이트를 가능하게한다. = save()없이도 업데이트가 가능해짐.
+         *
+         * dirtychecking 엔티티가 영속성 컨텍스트에 올라가있는 상태일때 = 영속상태라고 부름.
+         * 해당 객체의 필드가 변경되면 트랜젝션이 종료되기전에 jpa가 변경한 부분만 자동으로 감지하여 update querry를 실행해줌.
+         * save가 없어도 명시적으로 호출하지않아도 수정된 필드를 자동으로 db에 반영이 가능하다.
+         *
+         * */
+    }
+
+    @Transactional
     @Override
     public void remove(long cno) {
         Comment comment = commentRepository.findById(cno)
@@ -78,6 +104,8 @@ public class CommentServiceImpl implements CommentService {
         board.setCmtQty(board.getCmtQty()-1);
         commentRepository.deleteById(cno);
     }
+
+
 
 
 }

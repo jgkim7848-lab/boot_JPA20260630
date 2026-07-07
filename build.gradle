@@ -28,6 +28,8 @@ dependencies {
 	// Source: https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1
 	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 
+	// Source: https://mvnrepository.com/artifact/net.coobird/thumbnailator
+	implementation 'net.coobird:thumbnailator:0.4.20'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'

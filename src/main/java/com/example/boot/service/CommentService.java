@@ -35,4 +35,6 @@ public interface CommentService {
     void remove(long cno);
 
     Page<CommentDTO> getList(long bno, int page);
+
+    long modify(CommentDTO commentDTO);
 }
