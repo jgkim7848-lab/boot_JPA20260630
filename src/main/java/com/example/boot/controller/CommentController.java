@@ -15,7 +15,7 @@ import javax.print.attribute.standard.Media;
 import java.util.List;
 
 @Slf4j
-@RequestMapping("/comment")
+@RequestMapping("/comment/*")
 @RestController
 @RequiredArgsConstructor
 public class CommentController {

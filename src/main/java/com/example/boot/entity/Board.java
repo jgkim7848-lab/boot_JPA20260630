@@ -1,8 +1,8 @@
 package com.example.boot.entity;
 //Board
+
 import jakarta.persistence.*;
 import lombok.*;
-
 /*@Table(name=""   박으면 테이블 생성시 테이블 이름변경이 가능해진다.
 *일반적으로 클래스 명이 테이블 명으로 적용된다.
 *
@@ -44,11 +44,5 @@ public class Board extends TimeBase{
     private int cmtQty;
     @Column(name="file_qty", columnDefinition="int default 0")
     private int fileQty;
-
-
-
-
-
-
 
 }

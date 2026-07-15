@@ -4,12 +4,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}"
 >
-<!--/board/register.html-->
-<div layout:fragment="content" class="container-md">
+<div layout:fragment="content" class="container-md my-5">
     <!--  여기가 main  -->
     <!--/board/register.html-->
     <h1>Board Register Page</h1>
-    <form action="/board/register" method="post" class="my-5">
+    <form action="/board/register" method="post" enctype="multipart/form-data" class="my-5">
         <div class="mb-3">
             <label for="t" class="form-label">Title</label>
             <input type="text" class="form-control" name="title" id="t" placeholder="title...">
@@ -20,9 +19,65 @@
         </div>
         <div class="mb-3">
             <label for="c" class="form-label">Content</label>
-            <textarea class="form-control" id="c" rows="10" name="content" cols="30"></textarea>
+            <textarea class="form-control" id="c" name="content" rows="10" cols="30"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">register</button>
+        <!-- file upload 추가 -->
+        <div class="mb-3">
+            <!--multiple 하나의 input에 여러개의 파일 업로드-->
+            <input type="file" class="form-control" id="file"
+                   name="files" multiple style="display: none">
+            <button type="button" id="trigger" class="btn btn-outline-dark">File Upload</button>
+        </div>
+        <!--file print-->
+        <div class="mb-3" id="fileZone"></div>
+
+        <button type="submit" class="btn btn-primary" id="regBtn">register</button>
+
+        <script th:src="@{/js/boardRegister.js}"></script>
 
     </form>
 </div>
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en"-->
+<!--      xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layout/layout}"-->
+<!--&gt;-->
+<!--<div layout:fragment="content" class="container-md my-5">-->
+<!--    &lt;!&ndash;  여기가 main  &ndash;&gt;-->
+<!--    &lt;!&ndash;/board/register.html&ndash;&gt;-->
+<!--    <h1>Board Register Page</h1>-->
+<!--    <form action="/board/register" method="post" enctype="multipart/form-data" class="my-5">-->
+<!--        <div class="mb-3">-->
+<!--            <label for="t" class="form-label">Title</label>-->
+<!--            <input type="text" class="form-control" name="title" id="t" placeholder="title...">-->
+<!--        </div>-->
+<!--        <div class="mb-3">-->
+<!--            <label for="w" class="form-label">Writer</label>-->
+<!--            <input type="text" class="form-control" id="w" name="writer" placeholder="writer">-->
+<!--        </div>-->
+<!--        <div class="mb-3">-->
+<!--            <label for="c" class="form-label">Content</label>-->
+<!--            <textarea class="form-control" id="c" name="content" rows="10" cols="30"></textarea>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; file upload 추가 &ndash;&gt;-->
+<!--        <div class="mb-3">-->
+<!--            &lt;!&ndash;multiple 하나의 input에 여러개의 파일 업로드&ndash;&gt;-->
+<!--            <input type="file" class="form-control" id="file"-->
+<!--                   name="files" multiple style="display: none">-->
+<!--            <button type="button" id="trigger" class="btn btn-outline-dark">File Upload</button>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;file print&ndash;&gt;-->
+<!--        <div class="mb-3" id="fileZone"></div>-->
+
+<!--        <button type="submit" id="regBtn" class="btn btn-primary">register</button>-->
+
+<!--        <script th:src="@{/js/boardRegister.js}"></script>-->
+
+<!--    </form>-->
+<!--</div>-->
